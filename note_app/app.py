@@ -1,5 +1,5 @@
-from config import AppSettings
-from screens import MainScreen
+from .config import AppSettings
+from .screens import MainScreen
 from textual.app import App
 
 
