@@ -1,7 +1,6 @@
-from textual.app import App
-
 from config import AppSettings
 from screens import MainScreen
+from textual.app import App
 
 
 class NoteManagerApp(App):
