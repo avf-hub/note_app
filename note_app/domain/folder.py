@@ -7,5 +7,5 @@ class Folder:
     path: Path
 
     def __post_init__(self):
-        if self.name or self.name.strip() == "":
+        if not self.name or self.name.strip() == "":
             raise ValueError("Folder name cannot be empty")
