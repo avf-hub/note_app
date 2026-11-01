@@ -4,7 +4,7 @@ from pathlib import Path
 from note_app.domain import Folder
 
 
-class BaseRepository(ABC):
+class BaseFolderRepository(ABC):
     @abstractmethod
     def get_folders_by_path(self, path: Path) -> list[Folder]:
         pass

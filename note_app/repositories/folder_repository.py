@@ -3,10 +3,10 @@ from pathlib import Path
 import shutil
 
 from note_app.domain import Folder
-from note_app.repositories.base_folder_repository import BaseRepository
+from note_app.repositories.base_folder_repository import BaseFolderRepository
 
 
-class FolderRepository(BaseRepository):
+class FolderRepository(BaseFolderRepository):
     def __init__(self, base_path: Path):
         self.base_path = base_path.resolve()
 

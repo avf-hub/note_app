@@ -6,13 +6,13 @@ from textual.widgets import Tree
 from textual.widgets._tree import TreeNode
 
 from note_app.domain import Folder
-from note_app.repositories import BaseRepository
+from note_app.repositories import BaseFolderRepository
 
 
 class FileTreeWidget(VerticalScroll):
     _tree: Tree
 
-    def __init__(self, folder_repo: BaseRepository, *args, **kwargs):
+    def __init__(self, folder_repo: BaseFolderRepository, *args, **kwargs):
         self._folder_repo = folder_repo
         super().__init__(*args, **kwargs)
 
