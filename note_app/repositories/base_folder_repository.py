@@ -10,7 +10,7 @@ class BaseRepository(ABC):
         pass
 
     @abstractmethod
-    def create_folder(self, name: str) -> Folder:
+    def create_folder(self, path: Path, name: str) -> Folder:
         pass
 
     @abstractmethod
