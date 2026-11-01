@@ -1,4 +1,6 @@
+from datetime import datetime
 from pathlib import Path
+from typing import Optional
 
 from note_app.domain import Note
 from note_app.repositories.base_note_repository import BaseNoteRepository
@@ -21,7 +23,7 @@ class NoteRepository(BaseNoteRepository):
         return sorted(notes, key=lambda note: note.name)
 
     def create_note(self, path: Path, name: str) -> Note:
-        """Создание директории"""
+        """Создание заметки"""
         self._check_path(path)
 
         if path.name or "/" in path.name or "\\" in path.name:
@@ -43,3 +45,18 @@ class NoteRepository(BaseNoteRepository):
 
         if self.base_path not in path.parents and path != self.base_path:
             raise ValueError(f"Accessing note {path} is not allowed")
+
+    def update_note(self, note: Note, content: str, new_name: Optional[str] = None) -> Note:
+        """Обновление заметки"""
+        path = note.path.resolve()
+        self._check_path(path)
+
+        path.write_text(content, encoding="utf-8")
+
+        if new_name and new_name != note.name:
+            if "/" in note.name or "\\" in note.name:
+                raise ValueError("Invalid note name")
+            new_path = path.parent / f"{new_name}.md"
+            path.rename(new_path)
+            return Note(name=new_name, path=new_path, updated_at=datetime.now())
+        return note
