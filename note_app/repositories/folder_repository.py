@@ -1,6 +1,6 @@
 from pathlib import Path
 
-import shutils
+import shutil
 
 from note_app.domain import Folder
 from note_app.repositories.base_folder_repository import BaseRepository
@@ -41,7 +41,7 @@ class FolderRepository(BaseRepository):
         if path == self.base_path:
             raise ValueError("Can't delete base folder")
 
-        shutils.rmtree(path)
+        shutil.rmtree(path)
 
     def _check_path(self, path: Path):
         """Проверка пути"""

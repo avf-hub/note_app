@@ -17,8 +17,8 @@ class MainScreen(Screen):
     BINDINGS = [("q", "quit", "Выход")]
 
     def __init__(self, settings: AppSettings, *args, **kwargs):
-        super().__init__(*args, **kwargs)
         self.settings = settings
+        super().__init__(*args, **kwargs)
 
     def compose(self) -> ComposeResult:
         folder_repo = FolderRepository(self.settings.data_directory)
