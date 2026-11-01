@@ -13,5 +13,5 @@ class Note:
     updated_at: Optional[datetime] = datetime.now()
 
     def __post_init__(self):
-        if self.name or self.name.strip() == "":
+        if not self.name or self.name.strip() == "":
             raise ValueError("Note name cannot be empty")
