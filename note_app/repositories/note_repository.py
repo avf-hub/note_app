@@ -60,3 +60,8 @@ class NoteRepository(BaseNoteRepository):
             path.rename(new_path)
             return Note(name=new_name, path=new_path, updated_at=datetime.now())
         return note
+
+    def load_note(self, path: Path) -> Note:
+        with open(path, "r", encoding="utf-8") as f:
+            content = f.read()
+            return Note(name=path.name, path=path, content=content)

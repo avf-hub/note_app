@@ -21,3 +21,7 @@ class BaseNoteRepository(ABC):
     @abstractmethod
     def update_note(self, note: Note, content: str, new_name: Optional[str] = None) -> Note:
         pass
+
+    @abstractmethod
+    def load_note(self, path: Path) -> Note:
+        pass

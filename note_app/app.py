@@ -1,6 +1,8 @@
-from .config import AppSettings
-from .screens import MainScreen
 from textual.app import App
+
+from .config import AppSettings
+from .repositories import FolderRepository, NoteRepository
+from .screens import MainScreen
 
 
 class NoteManagerApp(App):
@@ -9,5 +11,7 @@ class NoteManagerApp(App):
         super().__init__(*args, **kwargs)
 
     def on_mount(self):
-        main_screen = MainScreen(self.settings)
+        folder_repo = FolderRepository(self.settings.data_directory)
+        note_repo = NoteRepository(self.settings.data_directory)
+        main_screen = MainScreen(self.settings, folder_repo, note_repo)
         self.push_screen(main_screen)
