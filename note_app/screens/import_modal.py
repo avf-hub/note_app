@@ -4,15 +4,9 @@ from textual.screen import ModalScreen
 from textual.widgets import Static, Input, Button
 
 
-class ImportModal(ModalScreen):
+class ImportModal(ModalScreen[str]):
     CSS = """
-        Screen {
-            align: center middle;
-        }
-        
         #dialog {
-            width: 60;
-            height: 15;
             border: solid grey;
         }
         
@@ -31,7 +25,21 @@ class ImportModal(ModalScreen):
     def compose(self) -> ComposeResult:
         with Container(id="dialog"):
             yield Static("Импорт данных", id="title")
-            yield Input(placeholder="Введите url для импорта")
+            yield Input(placeholder="Введите url для импорта", id="input-url")
             with Horizontal(id="buttons"):
-                yield Button(label="Импортировать", variant="primary")
-                yield Button("Отмена")
+                yield Button(label="Импортировать", variant="primary", id="import-btn")
+                yield Button("Отмена", id="cancel-btn")
+
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        if event.button.id == "import-btn":
+            url_input = self.query_one("#input-url", Input)
+            url = url_input.value.strip()
+            if url:
+                pass
+            else:
+                url_input.styles.border = ("solid", "red")
+        else:
+            self.dismiss(None)
+
+    async def import_data(self, url: str) -> None:
+        pass
