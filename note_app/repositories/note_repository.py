@@ -22,14 +22,15 @@ class NoteRepository(BaseNoteRepository):
                 notes.append(Note(name=sub_path.name, path=sub_path))
         return sorted(notes, key=lambda note: note.name)
 
-    def create_note(self, path: Path, name: str) -> Note:
+    def create_note(self, path: Path, name: str, content: str) -> Note:
         """Создание заметки"""
         self._check_path(path)
 
         if path.name or "/" in path.name or "\\" in path.name:
             raise ValueError("Invalid note name")
 
-        path.mkdir(parents=True, exist_ok=False)
+        new_path = path / f"{name}.md"
+        new_path.write_text(content, encoding="utf-8")
         return Note(name=name, path=path)
 
     def delete_note(self, note: Note) -> None:
