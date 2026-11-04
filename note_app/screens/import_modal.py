@@ -1,3 +1,4 @@
+import httpx
 from textual.app import ComposeResult
 from textual.containers import Container, Horizontal
 from textual.screen import ModalScreen
@@ -35,11 +36,20 @@ class ImportModal(ModalScreen[str]):
             url_input = self.query_one("#input-url", Input)
             url = url_input.value.strip()
             if url:
-                pass
+                self.app.call_later(self.import_data, url)
             else:
                 url_input.styles.border = ("solid", "red")
         else:
             self.dismiss(None)
 
     async def import_data(self, url: str) -> None:
-        pass
+        try:
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                response = await client.get(url)
+                response.raise_for_status()
+                data = response.text
+                await self.dismiss(data)
+        except httpx.HTTPError as err:
+            self.app.notify(f"Ошибка загрузки: {err}", severity="error")
+        except Exception as err:
+            self.app.notify(f"Неизвестная ошибка: {err}", severity="error")
